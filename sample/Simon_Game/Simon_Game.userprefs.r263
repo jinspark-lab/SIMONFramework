@@ -1,0 +1,20 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\ResultPage\ResultPageManager.cs">
+    <Files>
+      <File FileName="Assets\Script\ResultPage\ResultPageManager.cs" Line="86" Column="154" />
+      <File FileName="Assets\Script\ResultPage\ResultPageManager.cs" Line="263" Column="1" />
+      <File FileName="Assets\Script\Simulation\NormalGameSceneManager_Simulation.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Simulation\GameTimeManager_Simulation.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Simulation\Monster_Controller_B_Simulation.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Simulation\Monster_Controller_Simulation.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Simulation\Monster_Information_Controller_Simulation.cs" Line="1" Column="1" />
+      <File FileName="c:\Users\Ohhyeseong\Desktop\Work\trunk\Simon_Game\Assets\Script\GameTimeManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\NormalGameSceneManager.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
