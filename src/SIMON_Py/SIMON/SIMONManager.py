@@ -15,21 +15,22 @@ from SIMON import SIMONIntelligence
 # @SIMONSingleton.Singleton
 class SIMONManager:
 
-    #DefinitionObjects를 Manager 내부에 둘지말지도 고민이다. 사실 매니저가 Singleton이자 Facade 인데 굳이 멤버로 관리할 필요는 없을듯?????
     SIMONSerializer = SIMONObjectSerializer.SIMONObjectSerializer()
 
     ProjectName = ""
 
     def __init__(self, projectName):
-        print("Hello Im manager")
+        print("Launch SIMON Manager")
         self.ProjectName = projectName
         from SIMON import SIMONConstants
         if(not os.path.isdir(SIMONConstants.PROJECT_DIR_PATH() + "\\" + self.ProjectName)):
             self.CreateWorkspace()
 
-    # projectName을 전달받아서 관리하도록 하자.
+    #
+    #   create initial workspace for project using SIMON
+    #
+    #
     def create_workspace(self):
-#        projectPath = os.getcwd() + "\\SIMONProjects\\" + projectName
         from SIMON import SIMONConstants
         projectPath = SIMONConstants.PROJECT_DIR_PATH() + "\\" + self.ProjectName
 
@@ -40,14 +41,19 @@ class SIMONManager:
         if(not os.path.isdir(projectPath + "\\history")):
             os.makedirs(projectPath + "\\history")
 
-
+    #
+    #   clear memory data from workspace.
+    #   This method does not remove the files inside workspace
+    #
     def clear_workspace(self):
         SIMONCollection.SIMONObjectCollection.clear()
         SIMONFunction.UserFunctionCollection.clear()
 
-
+    #
+    #   build the memory data from local workspace
+    #
+    #
     def load_workspace(self, projectName):
-#        projectPath = os.getcwd() + "\\SIMONProjects\\" + projectName
         from SIMON import SIMONConstants
         projectPath = SIMONConstants.PROJECT_DIR_PATH() + "\\" + projectName
 
@@ -61,7 +67,10 @@ class SIMONManager:
 
         self.ProjectName = projectName
 
-
+    #
+    #   arrange the simon objects order by its actions
+    #
+    #
     def create_actionmap(self, group):
         actionMap = OrderedDict()
         if(hasattr(group, '__iter__')):
@@ -83,8 +92,11 @@ class SIMONManager:
 
             return actionMap
 
-
-    def run_routine(self, learnPoint):
+    #
+    #   main routine of the SIMON manager.
+    #   In this method, it contains classifying, making a decision and executing it.
+    #
+    def run_routine(self):
 
         from SIMON import SIMONConstants
 
@@ -145,8 +157,11 @@ class SIMONManager:
             SIMONFileStream.WriteHistory(SIMONConstants.PROJECT_DIR_PATH() + "\\" + self.ProjectName + "\\" + "\\history\\" + element.ObjectID + ".csv", element)
 
 
-
-    def learn_model(self, group):
+    #
+    #   method to run machine learning for objects in the group
+    #
+    #
+    def learn_genetic_model(self, group):
 
         actionMap = self.create_actionmap(group)
 
@@ -156,4 +171,5 @@ class SIMONManager:
 
         SIMONAlgorithmMain.run_genetic_algorithm(group, actionPool, propertyPool)
 
-        I = 0
+
+

@@ -9,47 +9,6 @@ class SIMONGeneticAction:
     ExecutionFunctionName = ""
     FitnessFunctionName = ""
 
-#    @property
-#    def ActionName(self):
-#        return self._ActionName
-#    @ActionName.setter
-#    def ActionName(self, actionName):
-#        self._ActionName = actionName
-#    @ActionName.deleter
-#    def ActionName(self):
-#        del self._ActionName
-
-#    @property
-#    def ActionFunctionName(self):
-#        return self._ActionFunctionName
-#    @ActionFunctionName.setter
-#    def ActionFunctionName(self, actionFunctionName):
-#        self._ActionFunctionName = actionFunctionName
-#    @ActionFunctionName.deleter
-#    def ActionFunctionName(self):
-#        del self._ActionFunctionName
-
-#    @property
-#    def ExecutionFunctionName(self):
-#        return self._ExecutionFunctionName
-#    @ExecutionFunctionName.setter
-#    def ExecutionFunctionName(self, executionFunctionName):
-#        self._ExecutionFunctionName = executionFunctionName
-#    @ExecutionFunctionName.deleter
-#    def ExecutionFunctionName(self):
-#        del self._ExecutionFunctionName
-
-#    @property
-#    def FitnessFunctionName(self):
-#        return self._FitnessFunctionName
-#    def FitnessFunctionName(self, fitnessFunctionName):
-#        self._FitnessFunctionName = fitnessFunctionName
-#    @FitnessFunctionName.deleter
-#    def FitnessFunctionName(self):
-#        del self._FitnessFunctionName
-
-#    ActionDNA = OrderedDict()
-
     def __init__(self, actionName = None, actionFunctionName = None, executionFunctionName = None, fitnessFunctionName = None, actionDNA = None):
         if(actionName is not None):
             self.ActionName = actionName

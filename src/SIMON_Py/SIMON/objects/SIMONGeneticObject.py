@@ -56,11 +56,13 @@ class SIMONGeneticObject:
 
 
     # SIMONProperty를 구성하는 각 요소들을 인자로 전달하여 Property를 Object에 추가.
-    def AssignProperty(self, propertyName, propertyValue, heritability):
+    def AssignProperty(self, propertyName, propertyValue, heritability, PropertyFitnessFunctionName = None):
         self.Properties[propertyName] = SIMONGeneticProperty()
         self.Properties[propertyName].PropertyName = propertyName
         self.Properties[propertyName].PropertyValue = propertyValue
         self.Properties[propertyName].Heritability = heritability
+        if(PropertyFitnessFunctionName is not None):
+            self.ObjectFunctionName = PropertyFitnessFunctionName
         if(heritability is True):
             self.PropertyDNA[propertyName] = SIMONGeneticProperty()
             self.PropertyDNA[propertyName].PropertyName = propertyName

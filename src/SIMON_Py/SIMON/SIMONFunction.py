@@ -6,6 +6,10 @@ __author__ = 'Park'
 
 UserFunctionCollection = {}
 
+#
+#   Decorator for registering user simon functions.
+#
+#
 def Register(function):
     print("[OUT]Function Named " + function.__name__ + " has been added")
     UserFunctionCollection[function.__name__] = function
