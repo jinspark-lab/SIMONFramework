@@ -1,10 +1,10 @@
 __author__ = 'PARKJINSANG'
 
 
-# dictionary 들을 담은 list.
-state_map = []
-
 from collections import OrderedDict
+
+
+state_map = []
 
 #
 #   find whether the state is able to be mapped.

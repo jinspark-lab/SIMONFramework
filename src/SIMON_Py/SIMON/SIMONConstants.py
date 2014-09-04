@@ -17,3 +17,10 @@ def RECESSIVE_RATIO():
 def DOMINION_RATIO():
     return (3 / 4)
 
+def MAX_STATUS_RANGE():
+    return 100
+
+def DEFAULT_QTABLE_RANGE():
+    return 100
+
+

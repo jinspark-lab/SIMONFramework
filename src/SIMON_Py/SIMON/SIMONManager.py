@@ -92,6 +92,15 @@ class SIMONManager:
 
             return actionMap
 
+
+    #
+    #   execute the action which has been selected.
+    #
+    #
+    def execute_action(self, actionName, element, otherObjects):
+        SIMONFunction.UserFunctionCollection[actionName](element, otherObjects)
+
+
     #
     #   main routine of the SIMON manager.
     #   In this method, it contains classifying, making a decision and executing it.
@@ -112,43 +121,19 @@ class SIMONManager:
                 if unit is not element:
                     otherObjects[unit.ObjectID] = unit
 
-            actionValueTable = {}
-            actionMaxList = []
-            actionMaxValue = SIMONConstants.MINIMUM_CMP_VALUE()
-
             #                                                                                     #
             #                            판                          단                           #
             #                                                                                     #
-            # Implement Rule-based AI
 
+            from SIMON import SIMONUtilitybaseAgent
 
-            # 각 actionFunction들을 실행하면서 최댓값(들) 을 추출해냄.
-            for actionObject in element.Actions.values():
-                actionValue = SIMONFunction.UserFunctionCollection[actionObject.ActionFunctionName](element, otherObjects)
-
-                print("ActionValue : " + str(actionValue))
-
-                # dictionary의 키값으로 실행함수의 이름을, 밸류값으로 판단값을 추가시킨다.
-                if(actionValue is not None):
-                    actionValueTable[actionObject.ExecutionFunctionName] = actionValue
-                if(actionValue > actionMaxValue):
-                    actionMaxValue = actionValue
-
-            # 가장 판단값이 큰 리스트의 키값(판단값이 큰 액션의 실행함수의 이름을 저장한다.
-            for actionValueKey, actionValueElement in actionValueTable.items():
-                if(actionValueElement == actionMaxValue):
-                    actionMaxList.append(actionValueKey)
-
-            from random import randint
-            actionMaxKey = ""
-            if actionMaxList.__len__() > 0:
-                actionMaxKey = actionMaxList[randint(0, actionMaxList.__len__()-1)]
-
+            actionMaxKey = SIMONUtilitybaseAgent.make_decision_by_utility_base(element, otherObjects)
             print("Most Action : " + actionMaxKey)
 
-            # 가장 판단값이 큰 액션의 실행함수를 실행. Parameter로 element 자신과, 나머지 elements를 넘긴다.
-            SIMONFunction.UserFunctionCollection[actionMaxKey](element, otherObjects)
-
+            #                                                                                               #
+            #                           실                           행                                     #
+            # 가장 판단값이 큰 액션의 실행함수를 실행. Parameter로 element 자신과, 나머지 elements를 넘긴다.#
+            self.execute_action(actionMaxKey, element, otherObjects)
 
             #                                                                  #
             #                   기                           록                #
@@ -170,6 +155,8 @@ class SIMONManager:
         propertyPool = SIMONIntelligence.generatePropertyPool(group)
 
         SIMONAlgorithmMain.run_genetic_algorithm(group, actionPool, propertyPool)
+
+
 
 
 
