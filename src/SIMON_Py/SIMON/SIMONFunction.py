@@ -16,5 +16,10 @@ def Register(function):
 
 
 
-
+#
+#   execute the action which has been selected.
+#
+#
+def execute_action(actionName, element, otherObjects):
+    UserFunctionCollection[actionName](element, otherObjects)
 

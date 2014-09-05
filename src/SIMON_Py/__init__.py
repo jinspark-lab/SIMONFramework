@@ -143,16 +143,6 @@ print("Done")
 
 from SIMON.SIMONQLearningAgent import SIMONQLearningAgent
 
-qAgent = SIMONQLearningAgent(100, 0.5, gpp, PX=0, PY=0, PZ=0)
-
-dbg = qAgent.qtable
-
-print(dbg)
-
-print("Allocate Done")
-
-while(True):
-    pass
 
 from SIMON import SIMONStatusManager
 

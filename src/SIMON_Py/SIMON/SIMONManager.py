@@ -93,12 +93,7 @@ class SIMONManager:
             return actionMap
 
 
-    #
-    #   execute the action which has been selected.
-    #
-    #
-    def execute_action(self, actionName, element, otherObjects):
-        SIMONFunction.UserFunctionCollection[actionName](element, otherObjects)
+
 
 
     #
@@ -128,12 +123,13 @@ class SIMONManager:
             from SIMON import SIMONUtilitybaseAgent
 
             actionMaxKey = SIMONUtilitybaseAgent.make_decision_by_utility_base(element, otherObjects)
-            print("Most Action : " + actionMaxKey)
 
             #                                                                                               #
             #                           실                           행                                     #
             # 가장 판단값이 큰 액션의 실행함수를 실행. Parameter로 element 자신과, 나머지 elements를 넘긴다.#
-            self.execute_action(actionMaxKey, element, otherObjects)
+            SIMONFunction.execute_action(actionMaxKey, element, otherObjects)
+
+
 
             #                                                                  #
             #                   기                           록                #
