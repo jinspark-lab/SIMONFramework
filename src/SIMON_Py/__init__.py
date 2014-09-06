@@ -138,7 +138,7 @@ for learn_iter in range(1, 100):
 print("Done")
 
 """
-
+"""
 from SIMON import SIMONStatusManager
 
 
@@ -152,4 +152,15 @@ SIMONStatusManager.mapping_state(A=1, B=2, X=19, D='A')
 d  = SIMONStatusManager.state_map
 
 print(d)
+"""
+
+from SIMON import SIMONCollection
+
+from SIMON.agents.SIMONQLearningAgent import SIMONQLearningAgent
+
+qagent = SIMONQLearningAgent(100, 0.5, gpp, **gpp.States)
+
+qagent.run_agent(gpp, None)
+
+print(qagent.qtable)
 

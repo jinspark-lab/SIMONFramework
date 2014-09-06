@@ -30,8 +30,9 @@ class SIMONQLearningAgent:
         for arg_key, arg_val in kwargs.items():
             self.state_for_agent[arg_key] = arg_val
         for action in object_element.Actions.values():
-            self.qtable[action.ActionName] = OrderedDict()
+            self.qtable[action.ExecutionFunctionName] = OrderedDict()
         pass
+
 
     def set_status(self, **kwargs):
         for arg_key, arg_val in kwargs.items():
@@ -45,6 +46,8 @@ class SIMONQLearningAgent:
     def recursive_find_qtable_element(self, qtable_element, key_idx, **kwargs):
         state_name = None
         iter_count = 0
+        if(len(kwargs.keys()) == 0):
+            return None
         if(key_idx >= len(kwargs.keys())):
             return qtable_element
         for state_key in kwargs.keys():
@@ -95,7 +98,8 @@ class SIMONQLearningAgent:
     #
     #
     def pick_random_action_from_object(self, element):
-        random_action_name = None
+        # return 하는 값은 실행함수의 이름이 되어야 한다.
+        random_execution_name = None
 
         from random import randint
         random_action_idx = randint(0, len(element.Actions.values()) - 1)
@@ -103,10 +107,10 @@ class SIMONQLearningAgent:
         act_iterator = 0
         for act in element.Actions.values():
             if(act_iterator == random_action_idx):
-                random_action_name = act.ActionName
+                random_execution_name = act.ExecutionFunctionName
                 break
             act_iterator += 1
-        return random_action_name
+        return random_execution_name
 
     #
     #   decision process by using the algorithm of reinforcement learning.
@@ -118,14 +122,14 @@ class SIMONQLearningAgent:
 
         for act in element.Actions.values():
 
-            qtable_value = self.recursive_find_qtable_element(self.qtable_element[act], 1, **kwargs)
+            qtable_value = self.recursive_find_qtable_element(self.qtable[act.ExecutionFunctionName], 1, **kwargs)
 
             if(qtable_value is None):
                 # 보상값이 비어있다.
                 pass
             else:
-                # 보상값이 있음.
-                decision_array_tuple = (act.ActionName, qtable_value)
+                # 실행 함수의 이름과 판단 값을 Decision Array의 튜플로 저장한다.
+                decision_array_tuple = (act.ExecutionFunctionName, qtable_value)
                 decision_array.append(decision_array_tuple)
 
         from SIMON import SIMONConstants
@@ -158,8 +162,8 @@ class SIMONQLearningAgent:
 
         # 재귀적으로 next state에서의 qvalue 의 최댓값을 찾음.
         for act in element.Actions.values():
-            q_value = self.recursive_find_qtable_element(self.qtable[act], 1, **next_state)
-            if q_value >= max_q_value:
+            q_value = self.recursive_find_qtable_element(self.qtable[act.ExecutionFunctionName], 1, **next_state)
+            if q_value is not None and q_value >= max_q_value:
                 max_q_value = q_value
 
         # prev state 에서 action 을 했을 경우에 qtable 보상값을 update.
@@ -170,35 +174,33 @@ class SIMONQLearningAgent:
     #   agent module for reinforcement AI
     #
     #
-    def run_agent(self, group, **kwargs):
+    def run_agent(self, element, others):
 
-        for element in group.values():
+#        for element in group.values():
 
-            others = OrderedDict()
-            for unit in group.values():
-                if unit is not element:
-                    others[unit.ObjectID] = unit
+#        others = OrderedDict()
+#        for unit in group.values():
+#            if unit is not element:
+#                others[unit.ObjectID] = unit
 
-            decided_action = self.make_decision_by_reinforcement(element, **kwargs)
+        decided_action = self.make_decision_by_reinforcement(element, **element.States)
 
-            from SIMON import SIMONFunction
+        from SIMON import SIMONFunction
 
-            #
-            #       이건 현재 element 의 상태값이 들어가야 하는건가?? 근데 생각해보면 그런게, 로봇의 위치는 world의 상태가 아니다.
-            #
 
-            # save the previous states before acting something.
-            prev_state = OrderedDict()
-            for state_key, state_value in kwargs.items():
-                prev_state[state_key] = state_value
+        # save the previous states before acting something.
+        prev_state = OrderedDict()
+        for state_key, state_value in element.States.items():
+            prev_state[state_key] = state_value
 
-            # execute the specified action.
-            SIMONFunction.execute_action(decided_action, element, others)
+        # execute the specified action.
+        SIMONFunction.execute_action(decided_action, element, others)
 
-            # save the newest states after acting something.
-            next_state = OrderedDict()
-            for state_key, state_value in kwargs.items():
-                next_state[state_key] = state_value
+        # save the newest states after acting something.
+        next_state = OrderedDict()
+        for state_key, state_value in element.States.items():
+            next_state[state_key] = state_value
 
-            self.update_qtable(element, decided_action, prev_state, next_state)
+        self.update_qtable(element, decided_action, prev_state, next_state)
+
 

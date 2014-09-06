@@ -23,6 +23,7 @@ class SIMONGeneticObject:
             self.__dict__ = json.loads(simon_json)
         self.Properties = OrderedDict()
         self.Actions = OrderedDict()
+        self.States = OrderedDict()
         self.PropertyDNA = OrderedDict()
         self.ObjectFunctionName = ""
         SIMONCollection.SIMONObjectCollection[self.ObjectID] = self
@@ -84,6 +85,17 @@ class SIMONGeneticObject:
     def AssignDNA(self, baseAction, **kwargs):
         for elementName, elementWeight in kwargs.items():
             self.Actions[baseAction].InsertDNA(elementName, elementWeight)
+
+
+    # state 개별 변수를 별도로 할당하는 함수
+    def AssignState(self, state_name, state_initial_value):
+        self.States[state_name] = state_initial_value
+
+
+    # 가변 길이를 갖는 dictionary 열거형 입력을 통해 state dictionary 를 삽입.
+    def AssignStates(self, **kwargs):
+        for state_key, state_value in kwargs.items():
+            self.States[state_key] = state_value
 
 
     def GetActionDNA(self, actionName):
