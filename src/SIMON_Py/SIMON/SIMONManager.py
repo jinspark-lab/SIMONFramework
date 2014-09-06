@@ -1,3 +1,4 @@
+from SIMON.agents import SIMONUtilitybaseAgent
 from SIMON.algorithms import SIMONAlgorithmMain
 from SIMON.objects import SIMONGeneticObject
 from SIMON.utils import SIMONObjectSerializer, SIMONFileStream
@@ -12,6 +13,11 @@ from SIMON import SIMONCollection
 from SIMON import SIMONFunction
 from SIMON import SIMONIntelligence
 
+from SIMON.agents.SIMONAgent import SIMONAgent
+from SIMON.agents.SIMONUtilitybaseAgent import SIMONUtilitybaseAgent
+from SIMON.agents.SIMONQLearningAgent import SIMONQLearningAgent
+
+
 # @SIMONSingleton.Singleton
 class SIMONManager:
 
@@ -19,12 +25,21 @@ class SIMONManager:
 
     ProjectName = ""
 
-    def __init__(self, projectName):
+    running_agent = SIMONAgent.utility_based_agent
+
+    def __init__(self, projectName, agent=None):
         print("Launch SIMON Manager")
         self.ProjectName = projectName
         from SIMON import SIMONConstants
         if(not os.path.isdir(SIMONConstants.PROJECT_DIR_PATH() + "\\" + self.ProjectName)):
             self.CreateWorkspace()
+
+        # initialize the agent object
+        if agent is SIMONAgent.utility_based_agent:
+            running_agent = SIMONUtilitybaseAgent
+        elif agent is SIMONAgent.qlearning_agent:
+            running_agent = SIMONQLearningAgent
+
 
     #
     #   create initial workspace for project using SIMON
@@ -93,49 +108,13 @@ class SIMONManager:
             return actionMap
 
 
-
-
-
     #
     #   main routine of the SIMON manager.
     #   In this method, it contains classifying, making a decision and executing it.
     #
     def run_routine(self):
 
-        from SIMON import SIMONConstants
-
-
-        for element in SIMONCollection.SIMONObjectCollection.values():
-            otherObjects = OrderedDict()
-
-            #                                                                                     #
-            #                            분                          류                           #
-            #                                                                                     #
-
-            for unit in SIMONCollection.SIMONObjectCollection.values():
-                if unit is not element:
-                    otherObjects[unit.ObjectID] = unit
-
-            #                                                                                     #
-            #                            판                          단                           #
-            #                                                                                     #
-
-            from SIMON import SIMONUtilitybaseAgent
-
-            actionMaxKey = SIMONUtilitybaseAgent.make_decision_by_utility_base(element, otherObjects)
-
-            #                                                                                               #
-            #                           실                           행                                     #
-            # 가장 판단값이 큰 액션의 실행함수를 실행. Parameter로 element 자신과, 나머지 elements를 넘긴다.#
-            SIMONFunction.execute_action(actionMaxKey, element, otherObjects)
-
-
-
-            #                                                                  #
-            #                   기                           록                #
-            #                                                                  #
-
-            SIMONFileStream.WriteHistory(SIMONConstants.PROJECT_DIR_PATH() + "\\" + self.ProjectName + "\\" + "\\history\\" + element.ObjectID + ".csv", element)
+        pass
 
 
     #

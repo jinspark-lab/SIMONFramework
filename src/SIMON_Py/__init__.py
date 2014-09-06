@@ -1,5 +1,3 @@
-from SIMON.objects import SIMONGeneticObject
-
 __author__ = 'PARKJINSANG'
 
 from SIMON.SIMONManager import SIMONManager
@@ -13,7 +11,7 @@ sManager = SIMONManager("Test")
 
 
 from SIMON import SIMONFunction
-from SIMON import SIMONCollection
+
 
 @SIMONFunction.Register
 def Foo1():
@@ -140,9 +138,6 @@ for learn_iter in range(1, 100):
 print("Done")
 
 """
-
-from SIMON.SIMONQLearningAgent import SIMONQLearningAgent
-
 
 from SIMON import SIMONStatusManager
 

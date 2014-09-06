@@ -19,4 +19,6 @@ SIMON v2.0 - It has been implemented by C#. We are trying few things to change a
 SIMON Py - It has been implemented by Python. We have already known about independency toward .Net framework, so we contentrate on implementing this version.
 		   It supports the rule based AI and utility based AI modeling. Additionally, we are now trying to apply reinforcement-learning algorithm.
 
-Please read document files if you are trying the framework for the first time.
+		   
+##Please read document files if you are trying the framework for the first time.
+
